@@ -1,0 +1,20 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Descripcion</th>
+        <th scope="col">Usuario</th>
+        <th scope="col">Ruta</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for meme in memes %}
+    <tr>
+        <th scope="row"> {{ loop.index }}</th>
+        <td>{{ meme.descripcion }}</td>
+        <td>{{ meme.usuario }}</td>
+        <td>{{ meme.ruta }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

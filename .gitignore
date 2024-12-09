@@ -2,3 +2,6 @@
 .venv
 .idea
 /app.log
+/uploads/*
+!/uploads/.gitkeep
+**/__pycache__/

@@ -1,0 +1,14 @@
+{% extends 'partials/_main.html' %}
+{% block content %}
+    {% include 'partials/_navbar.html' %}
+
+    <div class="container d-flex flex-column justify-content-center my-4 w-50">
+        {% include 'partials/_form_errors.html' %}
+        {% include 'partials/_form.html' %}
+    </div>
+
+    {% if memes %}
+        {% include 'partials/_meme_list.html' %}
+    {% endif %}
+
+{% endblock %}
