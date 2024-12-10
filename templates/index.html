@@ -7,8 +7,15 @@
         {% include 'partials/_form.html' %}
     </div>
 
-    {% if memes %}
-        {% include 'partials/_meme_list.html' %}
-    {% endif %}
+    <div class="mx-5">
+        {% if memes %}
+            {% include 'partials/_meme_list.html' %}
+        {% else %}
+            <div class="alert alert-primary" role="alert">
+                No hay datos.
+            </div>
+        {% endif %}
+    </div>
+
 
 {% endblock %}

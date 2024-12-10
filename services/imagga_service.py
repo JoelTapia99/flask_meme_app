@@ -22,10 +22,6 @@ def get_tags_from_imagga(image_path):
                 files={'image': image_file}
             )
         if response.status_code == 200:
-            # TODO: eliminar los prints
-            print("======================")
-            print(response.json())
-            print("======================")
             return response.json()
         else:
             return {"error": response.text}

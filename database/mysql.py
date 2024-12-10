@@ -15,7 +15,6 @@ def create_db_uri():
         db_name = os.getenv('AWS_MYSQL_DB_NAME')
         port = os.getenv('AWS_MYSQL_PORT')
 
-        print(f'mysql+pymysql://{user}:{password}@{host}:{port}/{db_name}')
         return f'mysql+pymysql://{user}:{password}@{host}:{port}/{db_name}'
     except Exception as e:
         Logger.error(f"Error al generar la URI de la base de datos: {str(e)}")
