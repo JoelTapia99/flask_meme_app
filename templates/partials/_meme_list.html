@@ -9,12 +9,12 @@
     </thead>
     <tbody>
     {% for meme in memes %}
-    <tr>
-        <th scope="row"> {{ loop.index }}</th>
-        <td>{{ meme.descripcion }}</td>
-        <td>{{ meme.usuario }}</td>
-        <td>{{ meme.ruta }}</td>
-    </tr>
+        <tr>
+            <th scope="row"> {{ loop.index }}</th>
+            <td>{{ meme.descripcion }}</td>
+            <td>{{ meme.usuario }}</td>
+            <td><a href="{{ meme.ruta }}" target="_blank">Ver imagen</a></td>
+        </tr>
     {% endfor %}
     </tbody>
 </table>

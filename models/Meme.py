@@ -12,5 +12,7 @@ class Meme(db.Model):
     usuario = db.Column(db.String(50), nullable=False)
     cargada = db.Column(db.DateTime, default=datetime.utcnow)
 
+    etiquetas = db.relationship('Etiqueta', backref='meme', lazy='dynamic')
+
 
 

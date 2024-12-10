@@ -9,7 +9,6 @@ load_dotenv()
 
 
 def get_tags_from_imagga(image_path):
-    # Abre el archivo como un stream y no lo cierra automáticamente
     try:
         api_key = os.getenv('IMAGGA_API_KEY')
         api_secret = os.getenv('IMAGGA_API_SECRET')

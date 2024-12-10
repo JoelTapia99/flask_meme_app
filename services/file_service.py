@@ -37,10 +37,12 @@ def save_file(request):
         db.session.commit()
 
         # Guardar las etiquetas en la base de datos
+        nueva_etiquetas = []
         for tag in tags:
             if not Etiqueta.query.filter_by(etiqueta=tag, meme_id=meme.id).first():
-                nueva_etiqueta = Etiqueta(meme_id=meme.id, etiqueta=tag, confianza=0.75)  # Ajustar confianza
-                db.session.add(nueva_etiqueta)
+                nueva_etiquetas = Etiqueta(meme_id=meme.id, etiqueta=tag, confianza=0.75)  # Ajustar confianza
+
+        db.session.bulk_save_objects(nueva_etiquetas)
 
         db.session.commit()
 
