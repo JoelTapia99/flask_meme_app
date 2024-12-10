@@ -64,7 +64,7 @@ IMAGGA_ENDPOINT=
 **Ejecutar la aplicación**: ejecutar el archivo principal `run.py`
 
    ```bash
-      pip run.py 
+      pip index.py 
    ```
 
 ```
