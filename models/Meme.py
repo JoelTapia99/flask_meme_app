@@ -11,3 +11,6 @@ class Meme(db.Model):
     ruta = db.Column(db.String(255), nullable=False)
     usuario = db.Column(db.String(50), nullable=False)
     cargada = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+
