@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 from flask import Blueprint, render_template, request, redirect
 
+from exceptions.coneccion_exception import ConnectionException
 from services.file_service import save_file
 from services.meme_service import search_memes, get_all
 from validators.form_validator import validate_form
@@ -12,13 +13,17 @@ load_dotenv()
 @main.route('/')
 def hello_world():
     data = []
-    query = request.args.get('query', '')
-    if query:
-        data = search_memes(query.strip().lower())
-    else:
-        data = get_all()
+    try:
+        query = request.args.get('query', '')
+        if query:
+            data = search_memes(query.strip().lower())
+        else:
+            data = get_all()
 
-    return render_template('index.html', memes=data)
+        return render_template('index.html', memes=data)
+    except ConnectionException as ce:
+        server_error = str(ce)
+        return render_template('index.html', memes=data, serverError=server_error)
 
 
 @main.route('/upload', methods=['POST'])
