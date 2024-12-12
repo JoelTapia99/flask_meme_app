@@ -1,3 +1,5 @@
+from sqlalchemy.orm import joinedload
+
 from exceptions.coneccion_exception import ConnectionException
 from models.Meme import Meme
 from sqlalchemy import or_
@@ -7,10 +9,11 @@ from utils.logger import Logger
 
 def get_all():
     try:
-        return db.session.query(Meme).all()
+        return Meme.query.options(joinedload(Meme.etiquetas)).order_by(Meme.cargada.desc()).all()
     except Exception as e:
         Logger.error(f"Error al traer todos los memes: {str(e)}")
         raise ConnectionException("Error con la conexión a la base de datos")
+
 
 def search_memes(query):
     try:

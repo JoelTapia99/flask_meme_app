@@ -18,7 +18,7 @@ def save_file(request):
         file = request.files.get('file')
         description = request.form.get('description')
         user = request.form.get('name')
-        # tags = request.form.getlist('tags') //analizar para que son las etiquetas del Front
+        tags = get_tags(request.form.getlist('tags'))
 
         file_path = os.path.join(UPLOAD_FOLDER, file.filename)
         file.save(file_path)
@@ -27,26 +27,25 @@ def save_file(request):
         tags_res = get_tags_from_imagga(file_path)
 
         if 'error' in tags_res:
-            os.remove(file_path)  # Elimina el archivo temporal en caso de error
+            os.remove(file_path)
             return ['Error al analizar la imagen']
-
-        tags = [tag['tag']['en'] for tag in tags_res['result']['tags'] if tag['confidence'] > 50]
 
         meme = Meme(descripcion=description, ruta=s3_url, usuario=user)
         db.session.add(meme)
         db.session.commit()
 
-        # Guardar las etiquetas en la base de datos
-        nueva_etiquetas = []
-        for tag in tags:
-            if not Etiqueta.query.filter_by(etiqueta=tag, meme_id=meme.id).first():
-                nueva_etiquetas = Etiqueta(meme_id=meme.id, etiqueta=tag, confianza=0.75)  # Ajustar confianza
+        tags_to_save = []
+        for tag in tags_res:
+            new_tag = Etiqueta(meme_id=meme.id, etiqueta=tag['etiqueta'], confianza=tag['confianza'])
+            tags_to_save.append(new_tag)
 
-        db.session.bulk_save_objects(nueva_etiquetas)
+        for tag in tags:
+            new_tag = Etiqueta(meme_id=meme.id, etiqueta=tag, confianza=None)
+            tags_to_save.append(new_tag)
+
+        db.session.bulk_save_objects(tags_to_save)
 
         db.session.commit()
-
-        # Eliminar el archivo temporal
         os.remove(file_path)
 
     except Exception as e:
@@ -70,3 +69,14 @@ def upload_file_to_s3(file, file_path):
         return f"https://{buket_name}.s3.{buket_region}.amazonaws.com/{file.filename}"
     except Exception as e:
         Logger.error(f"Error al subir el archivo a S3: {str(e)}")
+
+
+def get_tags(tags):
+    tags_list = []
+
+    for tag in tags:
+        sub_str = tag.split(',')
+        for value in sub_str:
+            tags_list.append(value.strip())
+
+    return tags_list

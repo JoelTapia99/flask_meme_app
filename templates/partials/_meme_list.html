@@ -5,6 +5,8 @@
         <th scope="col">Descripcion</th>
         <th scope="col">Usuario</th>
         <th scope="col">Ruta</th>
+        <th scope="col">Fecha de Carga</th>
+        <th scope="col">Etiquetas</th>
     </tr>
     </thead>
     <tbody>
@@ -13,7 +15,19 @@
             <th scope="row"> {{ loop.index }}</th>
             <td>{{ meme.descripcion }}</td>
             <td>{{ meme.usuario }}</td>
-            <td><a href="{{ meme.ruta }}" target="_blank">Ver imagen</a></td>
+            <td>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#imageModal"
+                        data-bs-image="{{ meme.ruta }}">Ver Imagen
+                </button>
+            </td>
+            <td>{{ meme.cargada }}</td>
+            <td>
+                <ul>
+                    {% for etiqueta in meme.etiquetas %}
+                        <li>{{ etiqueta.etiqueta }} (Confianza: {{ etiqueta.confianza }})</li>
+                    {% endfor %}
+                </ul>
+            </td>
         </tr>
     {% endfor %}
     </tbody>

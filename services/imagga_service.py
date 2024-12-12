@@ -20,9 +20,19 @@ def get_tags_from_imagga(image_path):
                 auth=(api_key, api_secret),
                 files={'image': image_file}
             )
-        if response.status_code == 200:
-            return response.json()
-        else:
-            return {"error": response.text}
+
+            if response.status_code != 200:
+                return []
+
+            data = response.json()
+            new_tags = []
+
+            for item in data['result']['tags']:
+                new_tag = {
+                    'etiqueta': item['tag']['en'],
+                    'confianza': item['confidence']
+                }
+                new_tags.append(new_tag)
+            return new_tags
     except Exception as e:
         Logger.error(f"Error al procesar la imagen: {str(e)}")
