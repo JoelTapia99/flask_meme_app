@@ -4,42 +4,44 @@
 
     {% include 'partials/_server_error.html' %}
 
-    <section class="container d-flex flex-row">
-        <section class="card my-5" style="max-width: 540px;">
-            <img src="{{ meme.ruta }}" class="img-fluid rounded-start" alt="imagen de {{ meme.usuario }}">
-        </section>
-        <section class="w-50 m-5">
-            <div class="card text-center">
-                <div class="card-body">
-                    <h5 class="card-title">Usuario: {{ meme.usuario }}</h5>
-                    <p class="card-text"> {{ meme.descripcion }} </p>
-                    <a href="/" class="btn btn-primary">Regresar</a>
+    {% if meme %}
+        <section class="container d-flex flex-row">
+            <section class="card my-5" style="max-width: 540px;">
+                <img src="{{ meme.ruta }}" class="img-fluid rounded-start" alt="imagen de {{ meme.usuario }}">
+            </section>
+            <section class="w-50 m-5">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Usuario: {{ meme.usuario }}</h5>
+                        <p class="card-text"> {{ meme.descripcion }} </p>
+                        <a href="/" class="btn btn-primary">Regresar</a>
+                    </div>
+                    <div class="card-footer text-body-secondary">
+                        Fecha de subida: {{ meme.cargada }}
+                    </div>
                 </div>
-                <div class="card-footer text-body-secondary">
-                    Fecha de subida: {{ meme.cargada }}
-                </div>
-            </div>
-            <div class="scrollable-table mt-5">
-                <table class="table table-striped">
-                    <thead class="sticky-header">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Etiqueta</th>
-                        <th scope="col">Confianza</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for tag in meme.etiquetas %}
+                <div class="scrollable-table mt-5">
+                    <table class="table table-striped">
+                        <thead class="sticky-header">
                         <tr>
-                            <th scope="row">{{ loop.index }}</th>
-                            <td>{{ tag.etiqueta }}</td>
-                            <td>{{ tag.confianza }}</td>
+                            <th scope="col">#</th>
+                            <th scope="col">Etiqueta</th>
+                            <th scope="col">Confianza</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+                        {% for tag in meme.etiquetas %}
+                            <tr>
+                                <th scope="row">{{ loop.index }}</th>
+                                <td>{{ tag.etiqueta }}</td>
+                                <td>{{ tag.confianza }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
         </section>
-    </section>
+    {% endif %}
 
 {% endblock %}

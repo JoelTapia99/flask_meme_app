@@ -1,7 +1,6 @@
-from locale import str
-
 from sqlalchemy.orm import noload, joinedload
 from exceptions.coneccion_exception import ConnectionException
+from models.Etiqueta import Etiqueta
 from models.Meme import Meme
 from sqlalchemy import or_
 from utils.db import db
@@ -18,12 +17,23 @@ def get_all():
 
 def search_memes(query):
     try:
-        memes = db.session.query(Meme).filter(
-            or_(
-                Meme.descripcion.like(f"%{query}%"),
-                Meme.usuario.like(f"%{query}%")
+        memes = (
+            db.session.query(Meme)
+            .join(Etiqueta, Meme.id == Etiqueta.meme_id)
+            .options(joinedload(Meme.etiquetas))
+            .filter(
+                or_(
+                    Meme.usuario.ilike(f"%{query}%"),
+                    Meme.descripcion.ilike(f"%{query}%"),
+                    Etiqueta.etiqueta.ilike(f"%{query}%")
+                )
             )
-        ).all()
+            .distinct()
+            .all()
+        )
+
+        print(memes)
+
         return [{"descripcion": meme.descripcion, "usuario": meme.usuario, "ruta": meme.ruta} for meme in memes]
     except Exception as e:
         Logger.error(f"Error al buscar los memes: {str(e)}")

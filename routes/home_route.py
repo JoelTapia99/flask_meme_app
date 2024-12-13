@@ -40,12 +40,12 @@ def upload():
 
     return redirect('/')
 
-@main.route('/<string:id>', methods=['GET'])
-def find_by_id(id):
-    exist = exist_meme(id)
+@main.route('/<string:meme_id>', methods=['GET'])
+def find_by_id(meme_id):
+    exist = exist_meme(meme_id)
     if exist is None:
         return render_template('details.html', memes=[])
 
-    meme = get_meme_by_id(id)
+    meme = get_meme_by_id(meme_id)
 
     return render_template('details.html', meme=meme)
