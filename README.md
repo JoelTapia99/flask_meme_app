@@ -1,7 +1,6 @@
 # FINAL PROJECT
 
-Este repositorio contiene un proyecto desarrollado en Python. Sigue las instrucciones a continuación para configurar el
-entorno y ejecutar el proyecto.
+Este repositorio contiene un proyecto desarrollado en Python. Sigue las instrucciones a continuación para configurar el entorno y ejecutar el proyecto.
 
 ## Requisitos
 
@@ -10,7 +9,7 @@ Asegúrate de tener instalado:
 - Python 3.7 o superior
 - pip (gestor de paquetes de Python)
 
-### Configuracion de variables de entorno
+### Configuración de variables de entorno
 
 ```
 # MYSQL
@@ -33,7 +32,7 @@ IMAGGA_ENDPOINT=
 
 ```
 
-## Configuración del entorno
+## Configuración del entorno de desarrollo sin Docker
 
 1. **Crear el entorno virtual**:
    Ejecuta el siguiente comando para crear un entorno virtual en la carpeta `venv`:
@@ -56,7 +55,7 @@ IMAGGA_ENDPOINT=
 3. **Crear el entorno virtual**:
    Ejecuta el siguiente comando para crear un entorno virtual en la carpeta `venv`:
    ```bash
-   pip install -r requirements.txt 
+   pip install -r requirements.txt
    ```
 
 ## Levantamiento del servidor
@@ -64,12 +63,25 @@ IMAGGA_ENDPOINT=
 **Ejecutar la aplicación**: ejecutar el archivo principal `run.py`
 
    ```bash
-      pip index.py 
+      pip index.py
    ```
 
-```
-git clone https://github.com/FaztWeb/flask-sqlalchemy-crud
-cd flask-sqlalchemy-crud
-pip install -r requirements.txt
-python index.py
-```
+## Configuración del entorno con Docker
+
+1. **Generar instancia de Docker**:
+
+   ```bash
+   docker build -t flask_meme_app .
+   ```
+2. **Ejecutar la Instancia**:
+
+   ```bash
+   docker run -it -p 7000:5000 flask_meme_app
+   ```
+3. **Ejecutar la instancia y almacenarla**:
+
+   Este comando correra la instancia de Docker y la almacenara dentro del contexto de Docker.
+   ```bash
+   docker run -d -p 80:5000 --name flask_meme_app flask_meme_app
+   ```
+   
